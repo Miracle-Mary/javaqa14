@@ -2,29 +2,28 @@ package ru.netology.manager;
 
 import ru.netology.domain.NotRegisteredException;
 import ru.netology.domain.Player;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashMap;
 
 public class Game {
-    // все зарегистрированные игроки в виде списка.
-    List<Player> players = new ArrayList<>();
+    // все зарегистрированные игроки в виде мапы с ключом - имя.
+    HashMap<String, Player> players = new HashMap<>();
 
     // метод регистрации игрока
     public void register(Player player) {
-        players.add(player);
+        players.put(player.getName(), player);
     }
 
-    public List<Player> findAll() {
+    public HashMap<String, Player> findAll() {
         return players;
     }
 
-    //полную информацию об игроке нужно будет найти в коллекции зарегистрированных игроков через имя
+    //полную информацию об игроке нужно будет найти в мапе зарегистрированных игроков через имя
     //если не зарегестрирован, должно выкинуться исключение NotRegisteredException, чтобы не дублировать в round
     public Player findByName(String playerName) {
-        for (Player player : players) {
-            if (player.getName().equals(playerName)) {
-                return player;
-            }
+        Player player = players.get(playerName);
+        if (player != null) {
+            return player;
         }
         throw new NotRegisteredException(
                 "Player: " + playerName + " not registered"

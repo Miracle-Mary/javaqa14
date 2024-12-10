@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.NotRegisteredException;
 import ru.netology.domain.Player;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class GameTest {
     Player player1 = new Player(11, "Irina55", 30);
@@ -18,12 +17,12 @@ public class GameTest {
         game.register(player1);
         game.register(player2);
         game.register(player3);
-        List<Player> actual = game.findAll();
+        HashMap<String, Player> actual = game.findAll();
 
-        List<Player> expected = new ArrayList<>();
-        expected.add(player1);
-        expected.add(player2);
-        expected.add(player3);
+        HashMap<String, Player> expected = new HashMap<>();
+        expected.put("Irina55", player1);
+        expected.put("Andrey", player2);
+        expected.put("Ivan7", player3);
 
         Assertions.assertEquals(expected, actual);
     }
@@ -45,9 +44,9 @@ public class GameTest {
         game.register(player2);
         game.register(player3);
 
-       Assertions.assertThrows(NotRegisteredException.class, () -> {
+        Assertions.assertThrows(NotRegisteredException.class, () -> {
             game.findByName("Lena");
-       });
+        });
     }
 
     @Test
